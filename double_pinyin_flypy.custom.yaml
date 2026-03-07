@@ -1,0 +1,45 @@
+# double_pinyin_flypy.custom.yaml
+# 针对雾凇小鹤双拼的专属劫持补丁，实现 MetaPY 逻辑
+patch:
+  # -------------------------------------------------------------------
+  # 1. 词库重定向
+  # 劫持雾凇的默认词库，指向我们之前建立的聚合大词库 (metapy_dict.dict.yaml)
+  # -------------------------------------------------------------------
+  "translator/dictionary": MetaPY
+
+  # 【关键修复】同步重定向 Prism 缓存名称，强制 Rime 放弃旧缓存，重新编译拼写规则
+  # "translator/prism": MetaPY
+
+  # -------------------------------------------------------------------
+  # 2. 拼写器 (Speller) 劫持
+  # 保留雾凇的大小写支持，同时注入你的 `/ 和 `'`，彻底改变单引号的行为
+  # -------------------------------------------------------------------
+  "speller/alphabet": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA'/
+  "speller/initials": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA/
+  "speller/finals": "'"
+  "speller/delimiter": " "
+
+  # -------------------------------------------------------------------
+  # 3. 辅码与组词逻辑 (Algebra) 注入
+  # @next 表示在雾凇自带的带圈字符运算规则末尾，追加你的“三码截断”规则
+  # -------------------------------------------------------------------
+  "speller/algebra/+":
+    - fuzz/^(\w\w)\w{1,2}'?$/$1/
+
+  # 4. Emoji 滤镜配置重定向 (指向你自定义的 JSON)
+  "emoji/opencc_config": MetaPY_emoji.json
+  
+  # -------------------------------------------------------------------
+  # 5. 反查引擎与组件挂载 (移植自 MetaPY.custom.yaml)
+  # 注意：雾凇默认已包含 radical_pinyin，此处仅追加 flypydz
+  # -------------------------------------------------------------------
+  schema/dependencies/+:
+    - flypydz         
+
+  # 在特定位置注入分段器，保证小鹤音形和拆字反查能够被正确触发
+  engine/segmentors/@before last: affix_segmentor@flypydz
+  engine/segmentors/@before last@1: affix_segmentor@radical_lookup
+  
+  engine/translators/+:
+    - script_translator@flypydz
+    - script_translator@radical_lookup
