@@ -1,8 +1,10 @@
 # double_pinyin_flypy.custom.yaml
 # 针对雾凇小鹤双拼的专属劫持补丁，实现 MetaPY 逻辑
 patch:
+  # 1. 方案名称修改
+  "schema/name": "元拼"
   # -------------------------------------------------------------------
-  # 1. 词库重定向
+  # 2. 词库重定向
   # 劫持雾凇的默认词库，指向我们之前建立的聚合大词库 (metapy_dict.dict.yaml)
   # -------------------------------------------------------------------
   "translator/dictionary": MetaPY
@@ -11,7 +13,7 @@ patch:
   # "translator/prism": MetaPY
 
   # -------------------------------------------------------------------
-  # 2. 拼写器 (Speller) 劫持
+  # 3. 拼写器 (Speller) 劫持
   # 保留雾凇的大小写支持，同时注入你的 `/ 和 `'`，彻底改变单引号的行为
   # -------------------------------------------------------------------
   "speller/alphabet": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA'/
@@ -20,26 +22,77 @@ patch:
   "speller/delimiter": " "
 
   # -------------------------------------------------------------------
-  # 3. 辅码与组词逻辑 (Algebra) 注入
+  # 4. 辅码与组词逻辑 (Algebra) 注入
   # @next 表示在雾凇自带的带圈字符运算规则末尾，追加你的“三码截断”规则
   # -------------------------------------------------------------------
   "speller/algebra/+":
     - fuzz/^(\w\w)\w{1,2}'?$/$1/
 
-  # 4. Emoji 滤镜配置重定向 (指向你自定义的 JSON)
+  # 5. Emoji 滤镜配置重定向 (指向你自定义的 JSON)
   "emoji/opencc_config": MetaPY_emoji.json
   
   # -------------------------------------------------------------------
-  # 5. 反查引擎与组件挂载 (移植自 MetaPY.custom.yaml)
-  # 注意：雾凇默认已包含 radical_pinyin，此处仅追加 flypydz
+  # 6. 反查引擎与组件挂载 (移植自 MetaPY.custom.yaml)
+  # 注意：雾凇默认已包含 radical_pinyin，此处仅追加 flypydz「方案选单」
   # -------------------------------------------------------------------
   schema/dependencies/+:
     - flypydz         
 
   # 在特定位置注入分段器，保证小鹤音形和拆字反查能够被正确触发
   engine/segmentors/@before last: affix_segmentor@flypydz
-  engine/segmentors/@before last@1: affix_segmentor@radical_lookup
   
   engine/translators/+:
     - script_translator@flypydz
-    - script_translator@radical_lookup
+# 反查滤镜
+  radical_reverse_lookup:
+    tags: [radical_lookup, flypydz]                  # 反查滤镜的tag[标签]，包含双拼拆字反查tag——radical_lookup；小鹤音形码查询tag——flypydz；
+    overwrite_comment: true                           # 是否覆蓋其他提示
+    # dictionary 为拼音标注来源，目前是显示本方案词库的注音。
+    # 可去部件拆字方案下载更全的、带声调的、已编译好的词典： https://github.com/mirtlecn/rime-radical-pinyin#反查带声调注音
+    dictionary: MetaPY                              # 提示码词表 反查所得为MetaPY词典
+    # comment_format:     # 自定义 comment，例如在左右加上括号
+    #  - xform/^/(/
+    #  - xform/$/)/
+# 副翻译器1——部件拆字反查
+  radical_lookup:
+    tag: radical_lookup
+    dictionary: radical_pinyin                              # 用于双拼拆字反查的词库名称
+    enable_sentence: false
+    enable_user_dict: false
+    prefix: "U" # 反查引导符
+    tips: "〔U模式輸入。支持拆分(水+水+水=>淼)，以及符号(标点:bndm；序号:xuhc；单位:djww；特殊:teuu；数学:uuxt；希腊字母:xila；罗马字母:loma；拼音:pbyb；日文:riwf；俄文:eewf；偏旁:pmph；上标:uhbn；下标:xxbn；注音符号:vuyb；制表符:vibn；)输入〕"
+    suffix: "'"
+    # comment_format:
+    #   - erase/^.*$//  
+  #tips: "〔U模式輸入。待完善：笔画（h/横，s/竖，p/撇，n/捺，z/折）〕"
+  
+  # 副翻译器2——小鹤音形码查询
+  flypydz:
+    tag: flypydz
+    dictionary: flypydz # 用于反查的词库flypydz
+    comment_format:
+     # - xform/^/〔/
+     # - xform/$/〕/
+      - xform/ / /
+  recognizer/patterns/flypydz: "[a-z`]*`+[a-z`]*"
+  recognizer/patterns/radical_lookup: "^U[a-z]+'?$"
+
+  # 7. 日期、时间、星期触发编码自定义
+  "date_translator/date": riqi
+  "date_translator/time": uijm
+  "date_translator/week": xkqi
+
+  # 8. 挂载你私有的 Lua 翻译器 (计算器与数字大写)
+  # 使用 engine/translators/+ 将其追加到翻译器链末尾，与雾凇原生翻译器平行共存
+  engine/translators/+:
+    - lua_translator@*calculator_translator
+    - lua_translator@*xnumber_translator
+
+  # 9. 私有 Lua 滤镜挂载 (如 Multiline_filter)
+  # 使用 engine/filters/+ 将其追加到滤镜链末尾
+  # 注意：必须在 rime.lua 中添加 Multiline_filter = require("Multiline_filter") 才能生效
+  "engine/filters/+":
+    - lua_filter@*Multiline_filter
+
+  # 10. 禁止双拼按键展开为全拼 (在候选框显示实际敲击的字母)
+  "translator/preedit_format": []
