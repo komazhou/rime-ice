@@ -98,3 +98,11 @@ patch:
 
   # 10. 禁止双拼按键展开为全拼 (在候选框显示实际敲击的字母)
   "translator/preedit_format": []
+
+  # ---------------------------------------------------------
+  # 11. 特殊符号触发模式替换 (禁用 V，恢复 / )
+  # ---------------------------------------------------------
+  # 覆写原方案的 punct 触发正则，包容小写字母和数字
+  "recognizer/patterns/punct": "^/[0-9a-z]+$"
+  # 直接调用 lua/slash_symbol.lua 脚本，优先级别设在最前
+  "engine/translators/@before 0": "lua_translator@*slash_symbol"
