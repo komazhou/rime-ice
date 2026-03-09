@@ -39,10 +39,10 @@ patch:
     - flypydz         
 
   # 在特定位置注入分段器，保证小鹤音形和拆字反查能够被正确触发
-  engine/segmentors/@before last: affix_segmentor@flypydz
-  
-  engine/translators/+:
-    - script_translator@flypydz
+  "engine/segmentors/@before last": affix_segmentor@flypydz
+  # 将 flypydz 翻译器追加到引擎的翻译器列表中
+  "engine/translators/@next": script_translator@flypydz
+
 # 反查滤镜
   radical_reverse_lookup:
     tags: [radical_lookup, flypydz]                  # 反查滤镜的tag[标签]，包含双拼拆字反查tag——radical_lookup；小鹤音形码查询tag——flypydz；
