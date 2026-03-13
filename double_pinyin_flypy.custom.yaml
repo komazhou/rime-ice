@@ -16,8 +16,8 @@ patch:
   # 3. 拼写器 (Speller) 劫持
   # 保留雾凇的大小写支持，同时注入你的 `/ 和 `'`，彻底改变单引号的行为
   # -------------------------------------------------------------------
-  "speller/alphabet": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA'/
-  "speller/initials": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA/
+  "speller/alphabet": zyxwvutsrqponmlkjihgfedcba'/
+  "speller/initials": zyxwvutsrqponmlkjihgfedcba/
   "speller/finals": "'"
   "speller/delimiter": " "
 
