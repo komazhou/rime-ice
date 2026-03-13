@@ -17,7 +17,7 @@
 # 转化应当大写的单词
 ---
 name: en
-version: "2026-03-03"
+version: "2026-03-08"
 sort: by_weight
 ...
 # +_+
@@ -913,6 +913,7 @@ anticipated	anticipated
 anticipation	anticipation
 antigen	antigen
 antigens	antigens
+antigravity	antigravity
 Antigua	Antigua
 Antilles	Antilles
 antimony	antimony
@@ -2293,6 +2294,7 @@ bonding	bonding
 bonds	bonds
 bone	bone
 bones	bones
+bonfire	bonfire
 Bonn	Bonn
 bonnie	bonnie
 Bono	Bono
@@ -4068,6 +4070,8 @@ complied	complied
 complies	complies
 compliment	compliment
 complimentary	complimentary
+complimented	complimented
+complimenting	complimenting
 compliments	compliments
 comply	comply
 complying	complying
@@ -4089,6 +4093,8 @@ comprehension	comprehension
 comprehensive	comprehensive
 compress	compress
 compressed	compressed
+compresses	compresses
+compressing	compressing
 compression	compression
 compressor	compressor
 comprise	comprise
@@ -4155,6 +4161,8 @@ condemn	condemn
 condemned	condemned
 condense	condense
 condensed	condensed
+condenses	condenses
+condensing	condensing
 condiment	condiment
 condition	condition
 conditional	conditional
@@ -5202,6 +5210,7 @@ decriers	decriers
 decries	decries
 decry	decry
 decrying	decrying
+decrypt	decrypt
 dedicate	dedicate
 dedicated	dedicated
 dedication	dedication
@@ -5687,6 +5696,8 @@ dimensional	dimensional
 dimensions	dimensions
 diminish	diminish
 diminished	diminished
+diminishes	diminishes
+diminishing	diminishing
 # dimm	dimm
 din	din
 dinar	dinar
@@ -6277,6 +6288,7 @@ dwelling	dwelling
 dwellings	dwellings
 # dwi	dwi
 Dwight	Dwight
+dwindle	dwindle
 # dx	dx
 # dy	dy
 dye	dye
@@ -7299,6 +7311,7 @@ faculties	faculties
 faculty	faculty
 fade	fade
 faded	faded
+fades	fades
 fading	fading
 Fahrenheit	Fahrenheit
 fail	fail
@@ -8912,6 +8925,7 @@ Hague	Hague
 haha	haha
 Hahn	Hahn
 # hai	hai
+haiku	haiku
 hail	hail
 hair	hair
 haired	haired
@@ -10590,6 +10604,7 @@ ivy	ivy
 jabber	jabber
 jack	jack
 Jack	Jack
+jackal	jackal
 jacket	jacket
 jackets	jackets
 Jackie	Jackie
@@ -12698,6 +12713,7 @@ mini	mini
 miniature	miniature
 miniatures	miniatures
 minimal	minimal
+minimax	minimax
 minimize	minimize
 minimized	minimized
 minimizing	minimizing
@@ -12871,6 +12887,7 @@ molecular	molecular
 molecule	molecule
 molecules	molecules
 Molly	Molly
+molt	molt
 molybdenum	molybdenum
 mom	mom
 moment	moment
@@ -13233,7 +13250,7 @@ NAS	NAS
 NASA	NASA
 nasal	nasal
 NASCAR	NASCAR
-Nasdaq	Nasdaq
+NASDAQ	NASDAQ
 Nash	Nash
 Nashville	Nashville
 Nassau	Nassau
@@ -14947,6 +14964,7 @@ pistols	pistols
 piston	piston
 pistons	pistons
 pit	pit
+pitaya	pitaya
 # pitbull	pitbull
 Pitcairn	Pitcairn
 pitch	pitch
@@ -15814,6 +15832,7 @@ PSP	PSP
 # psu	psu
 # psy	psy
 psychiatric	psychiatric
+psychiatrist	psychiatrist
 psychiatry	psychiatry
 psychic	psychic
 psycho	psycho
@@ -16420,6 +16439,9 @@ reform	reform
 reformed	reformed
 reforms	reforms
 refrain	refrain
+refrained	refrained
+refraining	refraining
+refrains	refrains
 refresh	refresh
 refreshing	refreshing
 refreshment	refreshment
@@ -16626,6 +16648,7 @@ rentals	rentals
 rented	rented
 renting	renting
 rents	rents
+reorder	reorder
 reorganization	reorganization
 rep	rep
 repair	repair
@@ -16897,6 +16920,7 @@ reward	reward
 rewarded	rewarded
 rewarding	rewarding
 rewards	rewards
+rewind	rewind
 rewrite	rewrite
 rewritten	rewritten
 Rex	Rex
@@ -17383,6 +17407,7 @@ sanitation	sanitation
 sanity	sanity
 sans	sans
 sans-serif	sans-serif
+Sanskrit	Sanskrit
 Santa	Santa
 Santa Claus	SantaClaus
 Santana	Santana
@@ -18121,6 +18146,7 @@ shown	shown
 showroom	showroom
 shows	shows
 showtimes	showtimes
+shrank	shrank
 shred	shred
 Shrek	Shrek
 Shreveport	Shreveport
@@ -18128,9 +18154,14 @@ shrewd	shrewd
 shrimp	shrimp
 shrine	shrine
 shrink	shrink
+shrinkage	shrinkage
+shrinking	shrinking
+shrinks	shrinks
 Shropshire	Shropshire
 shrubs	shrubs
 shrug	shrug
+shrunk	shrunk
+shrunken	shrunken
 shuffle	shuffle
 # shui	shui
 shut	shut
@@ -18859,6 +18890,9 @@ squared	squared
 squares	squares
 squash	squash
 squeeze	squeeze
+squeezed	squeezed
+squeezes	squeezes
+squeezing	squeezing
 squid	squid
 squirrel	squirrel
 squirt	squirt
@@ -19286,9 +19320,14 @@ subsections	subsections
 subsequent	subsequent
 subsequently	subsequently
 subset	subset
+subside	subside
+subsided	subsided
+subsidence	subsidence
+subsides	subsides
 subsidiaries	subsidiaries
 subsidiary	subsidiary
 subsidies	subsidies
+subsiding	subsiding
 subsidy	subsidy
 substance	substance
 substances	substances
@@ -20548,6 +20587,8 @@ translation	translation
 translations	translations
 translator	translator
 translators	translators
+transliterate	transliterate
+transliteration	transliteration
 translucent	translucent
 translucently	translucently
 transmission	transmission
@@ -21249,6 +21290,9 @@ Vanessa	Vanessa
 vanguard	vanguard
 vanilla	vanilla
 vanish	vanish
+vanished	vanished
+vanishes	vanishes
+vanishing	vanishing
 vanity	vanity
 vans	vans
 vantage	vantage
