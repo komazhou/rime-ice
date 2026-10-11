@@ -20,6 +20,11 @@
   1. 用 `grep -r "目标词"  <词典目录>/` 确认词条是否已存在
   2. 按要求将修改写入正确的文件，格式完备，但顺序任意
   3. 运行 `make -C others/script/ build`，这个脚本将自动排序、去重。如遇错误，根据提示修改。
+- 维护或修改 AutoHotkey 辅助脚本（如 `RimeInfoManager.ahk`）时，文件必须严格强制保存为 **带 BOM 的 UTF-8（UTF-8 with BOM，十六进制签名 `EF BB BF`）**，严禁使用无 BOM 的 UTF-8，避免 AutoHotkey v1 将中文或 Emoji 误按 ANSI 解析导致变量解析崩溃。
+- **严格遵循「底座 + 补丁」架构**：
+  1. `D:\Dev_Git\Rime` 严格作为公共纯净底座，严禁直接就地修改或删除任何上游跟踪文件（包括 `default.yaml`、`*.schema.yaml`、原生 `lua/` 脚本、`others/Hamster`、`others/iRime` 等）。
+  2. 所有的个人自定义修改（包括方案定制、按键映射、简繁配置、私有词典、私有 Lua 模块等）必须且只能在补丁端 `D:\Dev_Git\Rime_Private` 处理，通过 `*.custom.yaml` 的 `patch:` 机制注入，并通过 `setup_symlinks.ps1` 原生符号链接挂载到底座。
+  3. 任何外挂的私有资产必须在 `D:\Dev_Git\Rime\.git/info/exclude` 中显式排除，严禁将私有文件直接提交到底座仓库，确保底座与上游随时保持 0 冲突同步。
 
 ## 提交规则
 
@@ -65,7 +70,10 @@ make -C others/script/ lint
   - `en_ext`：扩展英文词库，收录在词典里面一般不会收录的英文词，例如网络用词，产品名称，特别缩写，标准名称。
 - `en_dicts/*.txt`：中英混合词库文件，由 `others/cn_en.txt` 派生。
 - `opencc/`：OpenCC 映射文件，控制 Emoji 和部分特殊词输出，由 `others/emoji-map.txt` 派生。
+  - `patent.txt`：外挂私有资产，企业客户信息映射表。格式统一为：`字号<Tab>字号自身 全称 统一社会信用代码 地址（可能含邮编） 其他信息`；多行信息使用 `\r` 换行，空格使用 `&nbsp`。
 - `lua/`：Lua 扩展脚本，使用 `librime-lua` API。
+  - `Multiline_filter.lua`：外挂私有滤镜，用于解析 OpenCC 文本中的 `\r`、`\n`、`&nbsp` 等多行长文本渲染。废弃跨端兼容性差的动态读写滤镜（如 `info_filter.lua`），全平台统一由 OpenCC 驱动。
+- `iOS/`：移动端部署目录骨架（已在本地 git exclude 忽略）。包含 `Hamster/`（仓输入法）与 `YuanShu/`（元书输入法）的层级结构（`RIME/Rime`、`RimeUserData/`、`Skins/`、`Fonts/`），仓库根目录保持扁平以直接兼容 Win/Mac 部署。
 - `others/script/`：构建、检查和测试脚本。
 - `others/recipes/`：plum 配方文件。
 - `*.schema.yaml`：输入方案文件，定义拼写、翻译器、过滤器和词库引用。
